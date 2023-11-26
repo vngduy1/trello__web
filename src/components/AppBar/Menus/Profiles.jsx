@@ -34,7 +34,7 @@ function Profiles() {
           aria-expanded={open ? "true" : undefined}
         >
           <Avatar
-            sx={{ width: 30, height: 30 }}
+            sx={{ width: 34, height: 34 }}
             alt="Dvn"
             src="https://yt3.ggpht.com/yti/ADpuP3O9NGfC1DOCFx6AARJCjG7KfVNU0-Weedq244P4=s88-c-k-c0x00ffffff-no-rj"
           />

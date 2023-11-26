@@ -9,6 +9,7 @@ import Tooltip from "@mui/material/Tooltip";
 import AppsIcon from "@mui/icons-material/Apps";
 import NotificationsNoneIcon from "@mui/icons-material/NotificationsNone";
 import HelpOutlineIcon from "@mui/icons-material/HelpOutline";
+import LibraryAddIcon from "@mui/icons-material/LibraryAdd";
 
 import ModeSelect from "~/components/ModeSelect";
 import { ReactComponent as TrelloLogo } from "~/assets/trello.svg";
@@ -84,7 +85,9 @@ function AppBar() {
           <Starred />
           <Templates />
           <Contact />
-          <Button variant="outlined">Create</Button>
+          <Button variant="outlined" startIcon={<LibraryAddIcon />}>
+            Create
+          </Button>
         </Box>
       </Box>
       <Box
@@ -111,7 +114,7 @@ function AppBar() {
             />
           </Badge>
         </Tooltip>
-        <Tooltip title="Notification">
+        <Tooltip title="Help">
           <HelpOutlineIcon sx={{ cursor: "pointer", color: "primary.main" }} />
         </Tooltip>
         <Profiles />
