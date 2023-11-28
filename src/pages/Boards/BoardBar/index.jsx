@@ -11,15 +11,16 @@ import VpnLockIcon from "@mui/icons-material/VpnLock";
 import BoltIcon from "@mui/icons-material/Bolt";
 import FilterListIcon from "@mui/icons-material/FilterList";
 import PersonAddIcon from "@mui/icons-material/PersonAdd";
+import { BorderColor } from "@mui/icons-material";
 
 const MENU_STYLES = {
-  color: "primary.main",
-  bgcolor: "white",
+  color: "white",
+  bgcolor: "transparent",
   border: "none",
   padding: "5px",
   borderRadius: "4px",
   "& .MuiSvgIcon-root": {
-    color: "primary.main",
+    color: "white",
   },
   "&:hover": {
     bgcolor: "primary.50",
@@ -31,7 +32,7 @@ function BoardBar() {
     <Box
       px={2}
       sx={{
-        backgroundColor: "primary",
+        backgroundColor: "primary.main",
         width: "100%",
         height: (theme) => theme.trello.boardBarHeight,
         display: "flex",
@@ -39,7 +40,10 @@ function BoardBar() {
         justifyContent: "space-between",
         gap: 2,
         overflowX: "auto",
-        borderTop: "1px solid #00bfa5",
+        bgcolor: (theme) => {
+          theme.palette.mode === "dark" ? "#34495e" : "#1976d2";
+        },
+        borderBottom: "1px solid white",
       }}
     >
       <Box sx={{ display: "flex", alignItems: "center", gap: 2 }}>
@@ -76,16 +80,31 @@ function BoardBar() {
       </Box>
 
       <Box sx={{ display: "flex", alignItems: "center", gap: 2 }}>
-        <Button variant="outlined" startIcon={<PersonAddIcon />}>
+        <Button
+          variant="outlined"
+          startIcon={<PersonAddIcon />}
+          sx={{
+            color: "white",
+            borderColor: "white",
+            "&:hover": { color: "white" },
+          }}
+        >
           Invite
         </Button>
         <AvatarGroup
           max={7}
           sx={{
+            gap: "10px",
             "& .MuiAvatar-root": {
               width: 34,
               height: 34,
               fontSize: "16px",
+              border: "none",
+              color: "white",
+              cursor: "pointer",
+              "&: first-of-type": {
+                bgcolor: "#a4b0be",
+              },
             },
           }}
         >

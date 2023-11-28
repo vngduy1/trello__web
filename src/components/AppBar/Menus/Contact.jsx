@@ -23,6 +23,7 @@ function Contact() {
   return (
     <Box>
       <Button
+        sx={{ color: "white" }}
         id="basic-button-contact"
         aria-controls={open ? "basic-menu-contact" : undefined}
         aria-haspopup="true"
