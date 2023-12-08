@@ -31,7 +31,7 @@ function AppBar() {
     <Box
       px={2}
       sx={{
-        backgroundColor: "primary.dark",
+        backgroundColor: "primary.main",
         width: "100%",
         height: (theme) => {
           theme.trello.appBarHeight;

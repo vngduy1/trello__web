@@ -42,7 +42,7 @@ function BoardBar({ board }) {
         gap: 2,
         overflowX: "auto",
         bgcolor: (theme) => {
-          theme.palette.mode === "dark" ? "#34495e" : "#1976d2";
+          theme.palette.mode === "dark" ? "#34495e" : "red";
         },
       }}
     >
