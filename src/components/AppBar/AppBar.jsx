@@ -31,7 +31,6 @@ function AppBar() {
     <Box
       px={2}
       sx={{
-        backgroundColor: "primary.main",
         width: "100%",
         height: (theme) => {
           theme.trello.appBarHeight;
@@ -41,9 +40,8 @@ function AppBar() {
         justifyContent: "space-between",
         gap: 2,
         overflowX: "auto",
-        bgcolor: (theme) => {
-          theme.palette.mode === "dark" ? "#2c3e50" : "#1565c0";
-        },
+        bgcolor: (theme) =>
+          theme.palette.mode === "dark" ? "#2c3e50" : "#1565c0",
       }}
     >
       <Box
@@ -133,14 +131,16 @@ function AppBar() {
               </InputAdornment>
             ),
             endAdornment: (
-              <CloseIcon
-                fontSize="small"
-                sx={{
-                  color: searchValue ? "white" : "transparent",
-                  cursor: "pointer",
-                }}
-                onClick={() => setSearchValue("")}
-              />
+              <InputAdornment position="end">
+                <CloseIcon
+                  fontSize="small"
+                  sx={{
+                    color: searchValue ? "white" : "transparent",
+                    cursor: "pointer",
+                  }}
+                  onClick={() => setSearchValue("")}
+                />
+              </InputAdornment>
             ),
           }}
           sx={{

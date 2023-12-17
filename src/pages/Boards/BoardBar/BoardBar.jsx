@@ -33,7 +33,6 @@ function BoardBar({ board }) {
     <Box
       px={2}
       sx={{
-        backgroundColor: "primary.main",
         width: "100%",
         height: (theme) => theme.trello.boardBarHeight,
         display: "flex",
@@ -41,18 +40,19 @@ function BoardBar({ board }) {
         justifyContent: "space-between",
         gap: 2,
         overflowX: "auto",
-        bgcolor: (theme) => {
-          theme.palette.mode === "dark" ? "#34495e" : "red";
-        },
+        bgcolor: (theme) =>
+          theme.palette.mode === "dark" ? "#34495e" : "#1976d2",
       }}
     >
       <Box sx={{ display: "flex", alignItems: "center", gap: 2 }}>
-        <Chip
-          sx={MENU_STYLES}
-          icon={<DashboardIcon />}
-          label={board?.title}
-          clickable
-        />
+        <Tooltip title={board?.description}>
+          <Chip
+            sx={MENU_STYLES}
+            icon={<DashboardIcon />}
+            label={board?.title}
+            clickable
+          />
+        </Tooltip>
         <Chip
           sx={MENU_STYLES}
           icon={<VpnLockIcon />}

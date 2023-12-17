@@ -5,8 +5,8 @@ import { mapOrder } from "~/utils/sort";
 import {
   DndContext,
   PointerSensor,
-  MouseSensor,
-  TouchSensor,
+  // MouseSensor,
+  // TouchSensor,
   useSensor,
   useSensors,
   DragOverlay,
@@ -17,6 +17,7 @@ import {
   getFirstCollision,
   closestCenter,
 } from "@dnd-kit/core";
+import { MouseSensor, TouchSensor } from "~/customLibraries/DndKitSensors";
 import { useCallback, useEffect, useRef, useState } from "react";
 import { cloneDeep, isEmpty } from "lodash";
 import { generatePlaceholderCard } from "~/utils/formatters";
@@ -370,9 +371,8 @@ function BoardContent({ board }) {
     >
       <Box
         sx={{
-          bgcolor: (theme) => {
-            theme.palette.mode === "dark" ? "#34495e" : "#1976d2";
-          },
+          bgcolor: (theme) =>
+            theme.palette.mode === "dark" ? "#34495e" : "#1976d2",
           width: "100%",
           height: (theme) => theme.trello.boardContentHeight,
           p: "10px 0",
