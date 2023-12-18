@@ -25,7 +25,7 @@ import CloseIcon from "@mui/icons-material/Close";
 import ListCards from "./ListCards/ListCards";
 import { mapOrder } from "~/utils/sort";
 
-function Column({ column }) {
+function Column({ column, createNewCard }) {
   const {
     attributes,
     listeners,
@@ -57,13 +57,22 @@ function Column({ column }) {
   const toggleOpenNewCardForm = () => setOpenNewCardForm(!openNewCardForm);
 
   const [newCardTitle, setNewCardTitle] = useState("");
-  const addNewCard = () => {
+  const addNewCard = async () => {
     if (!newCardTitle) {
       toast.error("Please enter card Title!", { position: "bottom-right" });
       return;
     }
 
-    //Dong trang thai them Column moi va Clear Input
+    //Tao du lieu column de goi API
+    const newCardData = {
+      title: newCardTitle,
+      columnId: column._id,
+    };
+
+    //Goi API
+    await createNewCard(newCardData);
+
+    //Dong trang thai them Card moi va Clear Input
     toggleOpenNewCardForm();
     setNewCardTitle("");
   };

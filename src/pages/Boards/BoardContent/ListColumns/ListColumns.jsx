@@ -13,17 +13,25 @@ import {
 
 import Column from "./Column/Column";
 
-function ListColumns({ columns }) {
+function ListColumns({ columns, createNewColumn, createNewCard }) {
   const [openNewColumnForm, setOpenNewColumnForm] = useState(false);
   const toggleOpenNewCOlumnForm = () =>
     setOpenNewColumnForm(!openNewColumnForm);
 
   const [newColumnTitle, setNewColumnTitle] = useState("");
-  const addNewColumn = () => {
+  const addNewColumn = async () => {
     if (!newColumnTitle) {
       toast.error("Please enter column title");
       return;
     }
+
+    //Tao du lieu column de goi API
+    const newColumnData = {
+      title: newColumnTitle,
+    };
+
+    //Goi API
+    await createNewColumn(newColumnData);
 
     //Dong trang thai them Column moi va Clear Input
     toggleOpenNewCOlumnForm();
@@ -46,7 +54,13 @@ function ListColumns({ columns }) {
         }}
       >
         {columns?.map((column) => {
-          return <Column key={column._id} column={column} />;
+          return (
+            <Column
+              key={column._id}
+              column={column}
+              createNewCard={createNewCard}
+            />
+          );
         })}
 
         {!openNewColumnForm ? (
