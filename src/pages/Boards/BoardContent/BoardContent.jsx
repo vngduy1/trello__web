@@ -1,6 +1,5 @@
 import Box from "@mui/material/Box";
 import ListColumns from "./ListColumns/ListColumns";
-import { mapOrder } from "~/utils/sort";
 
 import {
   DndContext,
@@ -32,7 +31,14 @@ const ACTIVE_DRAG_ITEM_TYPE = {
   CARD: " ACTIVE_DRAG_ITEM_TYPE_CARD",
 };
 
-function BoardContent({ board, createNewColumn, createNewCard }) {
+function BoardContent({
+  board,
+  createNewColumn,
+  createNewCard,
+  moveColumns,
+  moveCardInTheSameColumn,
+  moveCardToDifferentColumn,
+}) {
   //Yeu cau chuot di chuyen thi moi kinh hoat event
   const pointerSensor = useSensor(PointerSensor, {
     activationConstraint: { distance: 10 },
@@ -58,7 +64,7 @@ function BoardContent({ board, createNewColumn, createNewCard }) {
   const lastOverId = useRef(null);
 
   useEffect(() => {
-    setOrderedColumns(mapOrder(board?.columns, board?.columnOrderIds, "_id"));
+    setOrderedColumns(board.columns);
   }, [board]);
 
   //Tim mot column theo CardId
@@ -76,7 +82,8 @@ function BoardContent({ board, createNewColumn, createNewCard }) {
     over,
     activeColumn,
     activeDraggingCardId,
-    activeDraggingCardData
+    activeDraggingCardData,
+    triggerFrom
   ) => {
     setOrderedColumns((prevColumns) => {
       //Tim vi tri index cua cai overCard trong column dich(cai noi ma active Card sap duoc tha)
@@ -148,7 +155,16 @@ function BoardContent({ board, createNewColumn, createNewCard }) {
           (card) => card._id
         );
       }
-      // console.log("nextColumn", nextColumns);
+
+      if (triggerFrom === "handleDragEnd") {
+        //Goi len props function moveCardToDifferentColumn nam o component cha cao nhat
+        moveCardToDifferentColumn(
+          activeDraggingCardId,
+          oldColumnWhenDraggingCard._id,
+          nextOverColumn._id,
+          nextColumns
+        );
+      }
 
       return nextColumns;
     });
@@ -201,7 +217,8 @@ function BoardContent({ board, createNewColumn, createNewCard }) {
         over,
         activeColumn,
         activeDraggingCardId,
-        activeDraggingCardData
+        activeDraggingCardData,
+        "handleDragOver"
       );
     }
   };
@@ -238,7 +255,8 @@ function BoardContent({ board, createNewColumn, createNewCard }) {
           over,
           activeColumn,
           activeDraggingCardId,
-          activeDraggingCardData
+          activeDraggingCardData,
+          "handleDragEnd"
         );
       } else {
         // hanh dong keo tha card trong cung 1 column
@@ -255,6 +273,8 @@ function BoardContent({ board, createNewColumn, createNewCard }) {
           oldCardIndex,
           newCardIndex
         );
+
+        const dndOrderedCardIds = dndOrderedCards.map((card) => card._id);
         setOrderedColumns((prevColumns) => {
           //Clone mang orderedColumnsState cu thanh mang moi
           const nextColumns = cloneDeep(prevColumns);
@@ -267,6 +287,12 @@ function BoardContent({ board, createNewColumn, createNewCard }) {
           targetColumn.cardOrderIds = dndOrderedCards.map((card) => card._id);
           return nextColumns;
         });
+
+        moveCardInTheSameColumn(
+          dndOrderedCards,
+          dndOrderedCardIds,
+          oldColumnWhenDraggingCard._id
+        );
       }
     }
 
@@ -288,8 +314,12 @@ function BoardContent({ board, createNewColumn, createNewCard }) {
           oldColumnIndex,
           newColumnIndex
         );
-        // const dndOrderedColumnsIds = dndOrderedColumns.map(c => c._id)
+
+        //goi Update State o day tranh delay hoac bi loi giao dien luc keo tha can phai cho goi API
         setOrderedColumns(dndOrderedColumns);
+
+        //Goi props function moveColumns nam o component cha cao nhat
+        moveColumns(dndOrderedColumns);
       }
     }
 

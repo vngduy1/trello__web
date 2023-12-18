@@ -19,7 +19,7 @@ function ListColumns({ columns, createNewColumn, createNewCard }) {
     setOpenNewColumnForm(!openNewColumnForm);
 
   const [newColumnTitle, setNewColumnTitle] = useState("");
-  const addNewColumn = async () => {
+  const addNewColumn = () => {
     if (!newColumnTitle) {
       toast.error("Please enter column title");
       return;
@@ -31,7 +31,7 @@ function ListColumns({ columns, createNewColumn, createNewCard }) {
     };
 
     //Goi API
-    await createNewColumn(newColumnData);
+    createNewColumn(newColumnData);
 
     //Dong trang thai them Column moi va Clear Input
     toggleOpenNewCOlumnForm();

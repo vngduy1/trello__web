@@ -23,7 +23,6 @@ import DragHandleIcon from "@mui/icons-material/DragHandle";
 import CloseIcon from "@mui/icons-material/Close";
 
 import ListCards from "./ListCards/ListCards";
-import { mapOrder } from "~/utils/sort";
 
 function Column({ column, createNewCard }) {
   const {
@@ -51,13 +50,13 @@ function Column({ column, createNewCard }) {
     setAnchorEl(null);
   };
 
-  const orderedCards = mapOrder(column?.cards, column?.cardOrderIds, "_id");
+  const orderedCards = column.cards;
 
   const [openNewCardForm, setOpenNewCardForm] = useState(false);
   const toggleOpenNewCardForm = () => setOpenNewCardForm(!openNewCardForm);
 
   const [newCardTitle, setNewCardTitle] = useState("");
-  const addNewCard = async () => {
+  const addNewCard = () => {
     if (!newCardTitle) {
       toast.error("Please enter card Title!", { position: "bottom-right" });
       return;
@@ -70,7 +69,7 @@ function Column({ column, createNewCard }) {
     };
 
     //Goi API
-    await createNewCard(newCardData);
+    createNewCard(newCardData);
 
     //Dong trang thai them Card moi va Clear Input
     toggleOpenNewCardForm();
