@@ -38,6 +38,7 @@ function BoardContent({
   moveColumns,
   moveCardInTheSameColumn,
   moveCardToDifferentColumn,
+  deleteColumnDetails,
 }) {
   //Yeu cau chuot di chuyen thi moi kinh hoat event
   const pointerSensor = useSensor(PointerSensor, {
@@ -412,6 +413,7 @@ function BoardContent({
           columns={orderedColumns}
           createNewColumn={createNewColumn}
           createNewCard={createNewCard}
+          deleteColumnDetails={deleteColumnDetails}
         />
         <DragOverlay dropAnimation={dropAnimation}>
           {!activeDragItemType && null}
